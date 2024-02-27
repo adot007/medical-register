@@ -1,0 +1,1 @@
+DELETE user by id

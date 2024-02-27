@@ -12,7 +12,7 @@
 
         <h2 class="text-2xl font-semibold mb-4">Input data here</h2>
 
-        <form action="../func/process_form.php" method="post">
+        <form action="../func/add_patient_process.php" method="POST">
 
             <!-- Input 1 -->
             <div class="mb-4">
@@ -22,8 +22,8 @@
 
             <!-- Input 2 -->
             <div class="mb-4">
-                <label for="last_name" class="block text-gray-600">Last Name:</label>
-                <input type="text" id="last_name" name="last_name" class="form-input mt-1 block w-full" required>
+                <label for="surname" class="block text-gray-600">Surname:</label>
+                <input type="text" id="surname" name="surname" class="form-input mt-1 block w-full" required>
             </div>
 
             <!-- Repeat the pattern for Input 3 to Input 8 -->
@@ -50,8 +50,8 @@
 
             <!-- Input 5 -->
             <div class="mb-4">
-                <label for="roll_no" class="block text-gray-600">Roll Number:</label>
-                <input type="text" id="roll_no" name="roll_no" class="form-input mt-1 block w-full" required>
+                <label for="roll_num" class="block text-gray-600">Roll Number:</label>
+                <input type="text" id="roll_num" name="roll_num" class="form-input mt-1 block w-full" required>
             </div>
 
             <!-- Input 6 -->
@@ -94,12 +94,9 @@
             </div>
 
         </form>
-
     </div>
 
 </body>
 
-<?php 
 
-?>
 </html>
