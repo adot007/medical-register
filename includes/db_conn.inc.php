@@ -2,7 +2,7 @@
 
     $hostname = "localhost";
     $username = "phpmyadmin";
-    $password = "CUBEX1nscc";    
+    $password = "";    
     $database = "med-register";
     
 
