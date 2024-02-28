@@ -12,10 +12,11 @@
                     </form>-->
 <!-- Search Patient Form -->
             <!-- class="mb-6"-->
-            <form method="GET" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+<form method="GET" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
     <div class="input-group">
         <input type="text" id="search" name="search" class="form-control bg-light border-0 small px-3 py-2 rounded-md"
             placeholder="Search Patient by Name or Roll Number..." aria-label="Search" aria-describedby="basic-addon2">
+
         <div class="input-group-append">
             <button type="submit" class="btn bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">
                 Search
@@ -27,7 +28,7 @@
         <?php
 
     
-include($_SERVER['DOCUMENT_ROOT'] . '/medical/includes/db_conn.inc.php');
+include('../includes/db_conn.inc.php');
         
     
         // Process search

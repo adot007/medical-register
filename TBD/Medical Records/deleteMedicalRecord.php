@@ -1,1 +1,0 @@
-DELETE medical record by id
