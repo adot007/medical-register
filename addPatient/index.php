@@ -1,6 +1,6 @@
 <?php   
- //   include '../includes/header.inc.php';
- session_start();
+    //   include '../includes/header.inc.php';
+     session_start();
     $pageTitle = "Add Patient";
 ?>
 
@@ -15,201 +15,203 @@ include("../partials/head.php") ;
     <div id="wrapper">
 
     <?php  
-include("../partials/sidebar.php") ;
-?>
-      <div id="content-wrapper" class="d-flex flex-column">
+      include("../partials/sidebar.php") ;
+    ?>
 
-<!-- Main Content -->
-<div id="content">
+    <div id="content-wrapper" class="d-flex flex-column">
 
-    <!-- Topbar -->
-    <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+    <!-- Main Content -->
+    <div id="content">
 
-        <!-- Sidebar Toggle (Topbar) -->
-        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-            <i class="fa fa-bars"></i>
-        </button>
+        <!-- Topbar -->
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-        <!-- Topbar Search -->
-        <?php  
-include("../partials/search.php") ;
-?>
-        <!-- Topbar Navbar -->
-        <?php  
-include("../partials/navbar.php") ;
-?>
-       
-    </nav>
-    <div class="container-fluid">
+            <!-- Sidebar Toggle (Topbar) -->
+            <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                <i class="fa fa-bars"></i>
+            </button>
 
-<!-- Page Heading -->
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Add Patient</h1>
-  </div>
+            <!-- Topbar Search -->
+            <?php  
+                include("../partials/search.php") ;
+            ?>
 
-<!-- Content Row -->
-<div class="row">
+            <!-- Topbar Navbar -->
+            <?php  
+                include("../partials/navbar.php") ;
+            ?>
+        
+        </nav>
+        <div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Add New Patient</h1>
+    </div>
+
+    <!-- Content Row -->
+    <div class="row">
 
 
-<script>                    
-    function showSecondDropdown() {
-        var facultyDropdown = document.getElementById("faculty");
-        var relationDropdown = document.getElementById("relationDropdownContainer");
+    <script>                    
+        function showSecondDropdown() {
+            var facultyDropdown = document.getElementById("faculty");
+            var relationDropdown = document.getElementById("relationDropdownContainer");
 
-        // Get the selected value from the first dropdown 
+            // Get the selected value from the first dropdown 
 
-        var selectedValue = facultyDropdown.options[facultyDropdown.selectedIndex].value;
+            var selectedValue = facultyDropdown.options[facultyDropdown.selectedIndex].value;
 
-        // Check if the selected value is the one that triggers showing the second dropdown
-        if (selectedValue === "Staff") {
-            // Show the second dropdown
-            relationDropdown.classList.remove("hidden");
-        } else {
-            // Hide the second dropdown if a different option is selected
-            relationDropdown.classList.add("hidden");
+            // Check if the selected value is the one that triggers showing the second dropdown
+            if (selectedValue === "Staff") {
+                // Show the second dropdown
+                relationDropdown.classList.remove("hidden");
+            } else {
+                // Hide the second dropdown if a different option is selected
+                relationDropdown.classList.add("hidden");
+            }
         }
-    }
 
-    function checkDOB() {
-    const dateOfBirth = document.getElementById('d_o_b');
-    const faculty = document.getElementById('faculty').value;
-    const relation = document.getElementById('relation').value;
+        function checkDOB() {
+        const dateOfBirth = document.getElementById('d_o_b');
+        const faculty = document.getElementById('faculty').value;
+        const relation = document.getElementById('relation').value;
 
-    if (faculty === 'student') {
-        const selectedDOB = new Date(dateOfBirth.value);
-        const todaysDate = new Date();
-        const age = Math.floor((todaysDate - selectedDOB) / (1000 * 60 * 60 * 24 * 365));
+        if (faculty === 'student') {
+            const selectedDOB = new Date(dateOfBirth.value);
+            const todaysDate = new Date();
+            const age = Math.floor((todaysDate - selectedDOB) / (1000 * 60 * 60 * 24 * 365));
 
-        if (age < 16) {
-            alert('Please select a valid date of birth for a student.');
-            dateOfBirth.focus();
-            return false;
+            if (age < 16) {
+                alert('Please select a valid date of birth for a student.');
+                dateOfBirth.focus();
+                return false;
+            }
+        } else if (faculty === 'staff') {
+            const selectedDOB = new Date(dateOfBirth.value);
+            const todaysDate = new Date();
+            const age = Math.floor((todaysDate - selectedDOB) / (1000 * 60 * 60 * 24 * 365));
+
+            if (relation === 'ward' && age > 18) {
+                alert('Please select a valid date of birth for a staff member related as a ward.');
+                dateOfBirth.focus();
+                return false;
+            } else if (relation === 'spouse' && age < 18) {
+                alert('Please select a valid date of birth for a staff member related as a spouse.');
+                dateOfBirth.focus();
+                return false;
+            }
         }
-    } else if (faculty === 'staff') {
-        const selectedDOB = new Date(dateOfBirth.value);
-        const todaysDate = new Date();
-        const age = Math.floor((todaysDate - selectedDOB) / (1000 * 60 * 60 * 24 * 365));
 
-        if (relation === 'ward' && age > 18) {
-            alert('Please select a valid date of birth for a staff member related as a ward.');
-            dateOfBirth.focus();
-            return false;
-        } else if (relation === 'spouse' && age < 18) {
-            alert('Please select a valid date of birth for a staff member related as a spouse.');
-            dateOfBirth.focus();
-            return false;
+        return true;
+
         }
-    }
 
-    return true;
+        document.getElementById('faculty').addEventListener('change', checkDOB);
+        document.getElementById('relation').addEventListener('change', checkDOB);
+        document.getElementById('dateOfBirth').addEventListener('change', checkDOB);
 
-    }
-
-    document.getElementById('faculty').addEventListener('change', checkDOB);
-    document.getElementById('relation').addEventListener('change', checkDOB);
-    document.getElementById('dateOfBirth').addEventListener('change', checkDOB);
-
-</script>
+    </script>
 
 
-<div class="col-lg-6 mx-auto mb-4">
-    <div class="card border-primary shadow h-100 py-2">
-        <div class="card-body">
-            <h2 class="text-2xl font-semibold mb-4">Input data here</h2>
-            <form name="addPatient" action="./add_patient_process.php" method="POST">
+    <div class="col-lg-6 mx-auto mb-4">
+        <div class="card border-primary shadow h-100 py-2">
+            <div class="card-body">
+                <h2 class="text-2xl font-semibold mb-4">Input data here</h2>
+                <form name="addPatient" action="./add_patient_process.php" method="POST">
 
-                <!-- Input 1 -->
-                <div class="form-group row">
-                    <div class="col-sm-6 mb-3 mb-sm-0">
-                        <label for="first_name" class="block text-gray-600">First Name:</label>
-                        <input type="text" id="first_name" name="first_name" class="form-control form-control-user" required>
+                    <!-- Input 1 -->
+                    <div class="form-group row">
+                        <div class="col-sm-6 mb-3 mb-sm-0">
+                            <label for="first_name" class="block text-gray-600">First Name:</label>
+                            <input type="text" id="first_name" name="first_name" class="form-control form-control-user" required>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="surname" class="block text-gray-600">Surname:</label>
+                            <input type="text" id="surname" name="surname" class="form-control form-control-user" required>
+                        </div>
                     </div>
-                    <div class="col-sm-6">
-                        <label for="surname" class="block text-gray-600">Surname:</label>
-                        <input type="text" id="surname" name="surname" class="form-control form-control-user" required>
+
+                    <!-- Input 3 -->
+                    <div class="form-group">
+                        <label for="other_names" class="block text-gray-600">Other Names:</label>
+                        <input type="text" id="other_names" name="other_names" class="form-control form-control-user">
                     </div>
-                </div>
 
-                <!-- Input 3 -->
-                <div class="form-group">
-                    <label for="other_names" class="block text-gray-600">Other Names:</label>
-                    <input type="text" id="other_names" name="other_names" class="form-control form-control-user">
-                </div>
+                    <!-- Input 4 -->
+                    <div class="form-group">
+                        <label for="d_o_b" class="block text-gray-600">Date of Birth:</label>
+                        <input type="date" id="d_o_b" name="d_o_b" class="form-control form-control-user" required>
+                    </div>
 
-                <!-- Input 4 -->
-                <div class="form-group">
-                    <label for="d_o_b" class="block text-gray-600">Date of Birth:</label>
-                    <input type="date" id="d_o_b" name="d_o_b" class="form-control form-control-user" required>
-                </div>
+                    <!-- Input 5 -->
+                    <div class="form-group">
+                        <label for="faculty" class="block text-gray-600">Faculty:</label>
+                        <select id="faculty" name="faculty" class="form-control form-control-user" onchange="showSecondDropdown()" required>
+                            <option value="Student">Student</option>
+                            <option value="Staff">Staff</option>
+                        </select>
+                    </div>
 
-                <!-- Input 5 -->
-                <div class="form-group">
-                    <label for="faculty" class="block text-gray-600">Faculty:</label>
-                    <select id="faculty" name="faculty" class="form-control form-control-user" onchange="showSecondDropdown()" required>
-                        <option value="Student">Student</option>
-                        <option value="Staff">Staff</option>
-                    </select>
-                </div>
+                    <!-- Input 6 -->
+                    <div id="relationDropdownContainer" class="form-group hidden">
+                        <label for="relation" class="block text-gray-600">Relation:</label>
+                        <select id="relation" name="relation" class="form-control form-control-user" required>
+                            <option value="Self">Self</option>
+                            <option value="Spouse">Spouse</option>
+                            <option value="Ward">Ward</option>
+                        </select>
+                    </div>
 
-                <!-- Input 6 -->
-                <div id="relationDropdownContainer" class="form-group hidden">
-                    <label for="relation" class="block text-gray-600">Relation:</label>
-                    <select id="relation" name="relation" class="form-control form-control-user" required>
-                        <option value="Self">Self</option>
-                        <option value="Spouse">Spouse</option>
-                        <option value="Ward">Ward</option>
-                    </select>
-                </div>
+                    <!-- Input 7 -->
+                    <div class="form-group">
+                        <label for="roll_num" class="block text-gray-600">Roll Number:</label>
+                        <input type="text" id="roll_num" name="roll_num" class="form-control form-control-user" required>
+                    </div>
 
-                <!-- Input 7 -->
-                <div class="form-group">
-                    <label for="roll_num" class="block text-gray-600">Roll Number:</label>
-                    <input type="text" id="roll_num" name="roll_num" class="form-control form-control-user" required>
-                </div>
+                    <!-- Input 8 -->
+                    <div class="form-group">
+                        <label for="department" class="block text-gray-600">Department:</label>
+                        <select id="department" name="department" class="form-control form-control-user" required>
+                            <optgroup label="Administrative Departments">
+                                <option value="Admissions">Admissions</option>
+                                <option value="Finance">Finance</option>
+                                <option value="Human Resources">Human Resources</option>
+                                <option value="IT">IT</option>
+                            </optgroup>
+                            <optgroup label="Academic Departments">
+                                <option value="Transport">Transport</option>
+                                <option value="Engineering">Engineering</option>
+                                <option value="ICT">ICT</option>
+                                <option value="Nautical Science">Nautical Science</option>
+                            </optgroup>
+                        </select>
+                    </div>
 
-                <!-- Input 8 -->
-                <div class="form-group">
-                    <label for="department" class="block text-gray-600">Department:</label>
-                    <select id="department" name="department" class="form-control form-control-user" required>
-                        <optgroup label="Administrative Departments">
-                            <option value="Admissions">Admissions</option>
-                            <option value="Finance">Finance</option>
-                            <option value="Human Resources">Human Resources</option>
-                            <option value="IT">IT</option>
-                        </optgroup>
-                        <optgroup label="Academic Departments">
-                            <option value="Transport">Transport</option>
-                            <option value="Engineering">Engineering</option>
-                            <option value="ICT">ICT</option>
-                            <option value="Nautical Science">Nautical Science</option>
-                        </optgroup>
-                    </select>
-                </div>
+                    <!-- Input 9 -->
+                    <div class="form-group">
+                        <label for="gender" class="block text-gray-600">Gender:</label>
+                        <select id="gender" name="gender" class="form-control form-control-user" required>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
 
-                <!-- Input 9 -->
-                <div class="form-group">
-                    <label for="gender" class="block text-gray-600">Gender:</label>
-                    <select id="gender" name="gender" class="form-control form-control-user" required>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                    </select>
-                </div>
+                    <!-- Submit Button -->
+                    <div class="mt-6">
+                        <button type="submit" class="btn btn-primary btn-user btn-block">Submit</button>
+                    </div>
 
-                <!-- Submit Button -->
-                <div class="mt-6">
-                    <button type="submit" class="btn btn-primary btn-user btn-block">Submit</button>
-                </div>
-
-            </form>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 
 
 
-</div></div>
-</div></div>
-</div>
+    </div></div>
+    </div></div>
+    </div>
 
 
     <!-- Bootstrap core JavaScript-->

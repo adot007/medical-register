@@ -44,7 +44,7 @@ if (
                 VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);";
     
     #$stmt = mysqli_prepare($db_conn, $sql);
-    $stmt = $conn -> prepare($sql);
+    $stmt = $db_conn -> prepare($sql);
 
     $stmt -> bind_param("sssssssss", $first_name, $surname, $other_names, $date_of_birth,
                            $faculty, $relation, $roll_num, $department, $gender);
@@ -66,4 +66,4 @@ if (
 
     mysqli_stmt_close($stmt);
 }
-?>
+

@@ -1,62 +1,13 @@
-<?php 
-session_start();
-$pageTitle = "Add Record";
-
-include '../includes/db_conn.inc.php';
-//var_dump($_SESSION);
-
-if(isset($_SESSION['current_patient_id'])){
-    $current_patient_id = $_SESSION['current_patient_id'];
-} elseif (isset($_SESSION['searched_patient_id'])){
-    $current_patient_id = $_SESSION['searched_patient_id'];
-};
-
-if(isset($current_patient_id)){
-   // $current_patient_id = $_SESSION['current_patient_id'];
-
-     // Prepare and execute the SQL query 
-   
-     $sql = "SELECT first_name, other_names, surname FROM patient_data WHERE patient_id = ?";
-     $stmt = $conn->prepare($sql);
-     $stmt->bind_param("i", $current_patient_id);
-     $stmt->execute();
-     $stmt->bind_result($firstName, $othername, $lastName);
- 
-     // Fetch the results
-     if ($stmt->fetch()) {
-         // Display the patient's first name and last name
-       //  echo "Patient ID: $current_patient_id<br>";
-        // echo "First Name: $firstName<br>";
-        // echo "Last Name: $lastName<br>";
-         $fullName = $firstName;
-         $fullName .= $othername; 
-         $fullName .= $lastName;
-         //echo "Full Name: {$fullName}<br>";
-
-        // Close the statement and connection
-        $stmt->close();
-     } else {
-        
-         echo "Patient not found.";
-
-     } 
-    } else {
-        // If the patient ID is not set in the session, handle accordingly
-        $fullName = "No patient selected...";
-        echo "Patient ID not found in the session.";
-
-    }
-
-    $drugListSql = "SELECT DISTINCT drug FROM medicine_list ORDER BY drug ASC";
-    $drugListResult = $conn->query($drugListSql);
-
- ?>
+<?php
+    session_start();
+    $pageTitle = "Add Record";
+?>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <?php  
-include("../partials/head.php") ;
+    include("../partials/head.php") ;
 ?>
 <body id="page-top">
 
@@ -64,9 +15,60 @@ include("../partials/head.php") ;
     <div id="wrapper">
 
     <?php  
-include("../partials/sidebar.php") ;
-?>
-      <div id="content-wrapper" class="d-flex flex-column">
+    include("../partials/sidebar.php");
+    //include '../includes/db_conn.inc.php';
+    //var_dump($_SESSION);
+
+    if(isset($_SESSION['current_patient_id'])){
+        $current_patient_id = $_SESSION['current_patient_id'];
+    } elseif (isset($_SESSION['searched_patient_id'])){
+        $current_patient_id = $_SESSION['searched_patient_id'];
+    };
+
+    if(isset($current_patient_id)){
+    // $current_patient_id = $_SESSION['current_patient_id'];
+
+        // Prepare and execute the SQL query 
+    
+        $sql = "SELECT first_name, other_names, surname FROM patient_data WHERE patient_id = ?";
+        $stmt = $db_conn->prepare($sql);
+        $stmt->bind_param("i", $current_patient_id);
+        $stmt->execute();
+        $stmt->bind_result($firstName, $othername, $lastName);
+    
+        // Fetch the results
+        if ($stmt->fetch()) {
+            // Display the patient's first name and last name
+        //  echo "Patient ID: $current_patient_id<br>";
+            // echo "First Name: $firstName<br>";
+            // echo "Last Name: $lastName<br>";
+            $fullName = $firstName;
+            $fullName .= $othername;
+            $fullName .= " "; 
+            $fullName .= $lastName;
+            //echo "Full Name: {$fullName}<br>";
+
+            // Close the statement and connection
+            $stmt->close();
+        } else {
+            
+            echo "Patient not found.";
+
+        } 
+        } else {
+            // If the patient ID is not set in the session, handle accordingly
+            $fullName = "No patient selected...";
+            echo "Patient ID not found in the session.";
+
+        }
+
+        $drugListSql = "SELECT DISTINCT drug FROM medicine_list ORDER BY drug ASC";
+        $drugListResult = $db_conn->query($drugListSql);
+
+    ?>
+    
+
+    <div id="content-wrapper" class="d-flex flex-column">
 
 <!-- Main Content -->
 <div id="content">
@@ -81,12 +83,13 @@ include("../partials/sidebar.php") ;
 
         <!-- Topbar Search -->
         <?php  
-include("../partials/search.php") ;
-?>
+            include("../partials/search.php") ;
+        ?>
+
         <!-- Topbar Navbar -->
         <?php  
-include("../partials/navbar.php") ;
-?>
+            include("../partials/navbar.php") ;
+        ?>
        
     </nav>
 
@@ -99,7 +102,7 @@ include("../partials/navbar.php") ;
                     <div class="card border-primary shadow h-100 py-2">
                         <div class="card-body">
                             <h2 class="text-2xl font-semibold mb-4">Add New Record</h2>
-                            <form action="./add_diagnosis_process.php" method="post" enctype="multipart/form-data">
+                            <form action="./add_diagnosis_process.php" method="POST" enctype="multipart/form-data">
 
                                 <div class="form-group">
                                     <label for="patient_name" class="block text-gray-600">Patient Name:</label>
@@ -115,7 +118,7 @@ include("../partials/navbar.php") ;
                                     <label for="prescription" class="block text-gray-600">Prescription:</label>
 
                                     <div class="relative inline-block w-full text-gray-700">
-                                        <select name="drug" id="drugSelect" class="w-full appearance-none px-4 py-2 border rounded-md">
+                                        <select name="prescription[]" id="drugSelect" class="w-full appearance-none px-4 py-2 border rounded-md">
                                             <?php
                                             // Check if there are results
                                             if ($drugListResult->num_rows > 0) {

@@ -1,9 +1,8 @@
 <?php
 session_start();
-$pageTitle = "Add Clinical";
-
-
+$pageTitle = "Add Clinicals";
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,14 +35,15 @@ include("../partials/sidebar.php") ;
 
         <!-- Topbar Search -->
         <?php  
-include("../partials/search.php") ;
-?>
+            include("../partials/search.php") ;
+        ?>
         <!-- Topbar Navbar -->
         <?php  
-include("../partials/navbar.php") ;
-?>
+            include("../partials/navbar.php") ;
+        ?>
        
     </nav>
+
     <div class="col-lg-7 mx-auto mb-4">
     <div class="card border-primary shadow h-100 py-2">
         <div class="card-body">
@@ -92,7 +92,7 @@ include("../partials/navbar.php") ;
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
 
-
+<?php print_r ($_SESSION); ?>
 </body>
 
 </html>

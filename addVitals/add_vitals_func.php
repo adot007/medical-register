@@ -24,7 +24,7 @@ if(
     $sql = "INSERT INTO patient_vitals (temperature, bp_upper, bp_lower, patient_id)
                 VALUES(?, ?, ?, ?);";
 
-    $stmt = $conn -> prepare($sql);
+    $stmt = $db_conn -> prepare($sql);
 
     $stmt -> bind_param("ssss", $upperBloodPressure,$lowerBloodPressure, $temperature, $patientID);
 

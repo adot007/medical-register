@@ -23,7 +23,7 @@
   $sql = "INSERT INTO medical_records (patient_id, staff_id, vitals_id, diagnosis, prescription, notes)
           VALUES(?, ?, ?, ?, ?, ?);";
 
-  $stmt = mysqli_prepare($conn, $sql);
+  $stmt = mysqli_prepare($db_conn, $sql);
 
   mysqli_stmt_bind_param($stmt, "ssssss", $current_patient_id, $staff_id, $vitals_id, $diagnosis, $prescription, $notes);
 

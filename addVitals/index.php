@@ -1,77 +1,108 @@
 <?php
     session_start();
-
+   // include "../includes/db_conn.inc.php";
     $pageTitle = "Add Vitals";
-
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-<?php  
-include("../partials/head.php") ;
-?>
+    <?php  
+        include("../partials/head.php") ;
+    ?>
+
 <body id="page-top">
 
     <!-- Page Wrapper -->
     <div id="wrapper">
 
     <?php  
-include("../partials/sidebar.php") ;
-?>
-      <div id="content-wrapper" class="d-flex flex-column">
+        include("../partials/sidebar.php") ;
+    ?>
 
-<!-- Main Content -->
-<div id="content">
+    <div id="content-wrapper" class="d-flex flex-column">
 
-    <!-- Topbar -->
-    <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+    <!-- Main Content -->
+    <div id="content">
 
-        <!-- Sidebar Toggle (Topbar) -->
-        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-            <i class="fa fa-bars"></i>
-        </button>
+        <!-- Topbar -->
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-        <!-- Topbar Search -->
-        <?php  
-include("../partials/search.php") ;
-?>
-        <!-- Topbar Navbar -->
-        <?php  
-include("../partials/navbar.php") ;
-?>
+            <!-- Sidebar Toggle (Topbar) -->
+            <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                <i class="fa fa-bars"></i>
+            </button>
+
+            <!-- Topbar Search -->
+            <?php  
+                include("../partials/search.php") ;
+            ?>
+            <!-- Topbar Navbar -->
+            <?php  
+              include("../partials/navbar.php") ;
+            ?>
        
-    </nav>
-    <div class="col-lg-7 mx-auto mb-4">
-    <div class="card border-primary shadow h-100 py-2">
-        <div class="card-body">
-            <h2 class="text-2xl font-semibold mb-4">Clinical Data</h2>
-            <form action="add_vitals_func.php" method="POST">
+        </nav>
 
-                <div class="form-group">
-                    <label for="upperBloodPressure" class="block text-gray-600">Blood Pressure <span class="text-gray-500">*</span> <span class="text-xs text-gray-500">Upper</span></label>
-                    <input type="number" step=".1" id="upperBloodPressure" name="upperBloodPressure" class="form-control form-control-user mt-1" required>
+        <div class="col-lg-7 mx-auto mb-4">
+            <div class="card border-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <h2 class="text-2xl font-semibold mb-4">Clinical Data</h2>
+                    <form action="add_vitals_func.php" method="POST">
+
+                    <?php 
+                        $current_patient_id = isset($_SESSION['current_patient_id']) ? $_SESSION['current_patient_id'] : "";
+
+                        if ($current_patient_id != "") {
+                            $sqlQuery = "SELECT first_name, surname FROM patient_data WHERE patient_id = {$current_patient_id};";
+                            $sqlResult = mysqli_query($db_conn, $sqlQuery);
+
+                            if($sqlResult->num_rows > 0) {                            
+                                while ($row = mysqli_fetch_assoc($sqlResult)) {
+                                    $patient_full_name = $row['first_name']."".$row['surname'];                                   
+                                    //echo $patient_full_name;
+                                }
+                                // Additional processing if needed
+                            } else {
+                                // Handle case where no results are found
+                                $patient_full_name = "No patient ID found!";
+                                die(mysqli_error($db_conn));
+
+                            }
+                        } else {
+                            echo "No patient ID set!";
+                        }
+                    ?>
+
+
+                        <div class="form-group">
+                            <label for="patientName" class="block text-gray-600">Patient Name <span class="text-gray-500"></label>
+                            <input type="" id="patientName" name="patientName" class="form-control form-control-user mt-1"  readonly value= "<?php echo $patient_full_name ?>" >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="upperBloodPressure" class="block text-gray-600">Blood Pressure <span class="text-gray-500">*</span> <span class="text-xs text-gray-500">Upper</span></label>
+                            <input type="number" step=".1" id="upperBloodPressure" name="upperBloodPressure" class="form-control form-control-user mt-1" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lowerBloodPressure" class="block text-gray-600">Blood Pressure <span class="text-gray-500">*</span> <span class="text-xs text-gray-500">Lower</span></label>
+                            <input type="number" step=".1" id="lowerBloodPressure" name="lowerBloodPressure" class="form-control form-control-user mt-1" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="temperature" class="block text-gray-600">Temperature <span class="text-gray-500">*</span> <span class="text-xs text-gray-500">°C</span></label>
+                            <input type="number" step=".1" id="temperature" name="temperature" class="form-control form-control-user mt-1" required>
+                        </div>
+
+                        <div class="mt-6">
+                            <button type="submit" class="btn btn-primary btn-user btn-block">Submit</button>
+                        </div>
+
+                    </form>
                 </div>
-
-                <div class="form-group">
-                    <label for="lowerBloodPressure" class="block text-gray-600">Blood Pressure <span class="text-gray-500">*</span> <span class="text-xs text-gray-500">Lower</span></label>
-                    <input type="number" step=".1" id="lowerBloodPressure" name="lowerBloodPressure" class="form-control form-control-user mt-1" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="temperature" class="block text-gray-600">Temperature <span class="text-gray-500">*</span> <span class="text-xs text-gray-500">°C</span></label>
-                    <input type="number" step=".1" id="temperature" name="temperature" class="form-control form-control-user mt-1" required>
-                </div>
-
-                <div class="mt-6">
-                    <button type="submit" class="btn btn-primary btn-user btn-block">Submit</button>
-                </div>
-
-            </form>
-        </div>
+            </div>
+         </div>
     </div>
-</div>
-
-</div>
 </div>
 
 
@@ -91,6 +122,8 @@ include("../partials/navbar.php") ;
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
+
+    <!-- <?php print_r ($_SESSION); ?> -->
 
 
 </body>
