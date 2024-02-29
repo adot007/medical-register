@@ -2,7 +2,7 @@
 
   session_start();
 
-  include '../includes/db_conn.inc.php';  
+  include '../includes/conn.inc.php';  
 
   if(!isset($_SESSION)){
     echo("No valid session data found.");
@@ -23,7 +23,7 @@
   $sql = "INSERT INTO medical_records (patient_id, staff_id, vitals_id, diagnosis, prescription, notes)
           VALUES(?, ?, ?, ?, ?, ?);";
 
-  $stmt = mysqli_prepare($db_conn, $sql);
+  $stmt = mysqli_prepare($conn, $sql);
 
   mysqli_stmt_bind_param($stmt, "ssssss", $current_patient_id, $staff_id, $vitals_id, $diagnosis, $prescription, $notes);
 

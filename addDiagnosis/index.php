@@ -16,7 +16,7 @@
 
     <?php  
     include("../partials/sidebar.php");
-    //include '../includes/db_conn.inc.php';
+    //include '../includes/conn.inc.php';
     //var_dump($_SESSION);
 
     if(isset($_SESSION['current_patient_id'])){
@@ -31,7 +31,7 @@
         // Prepare and execute the SQL query 
     
         $sql = "SELECT first_name, other_names, surname FROM patient_data WHERE patient_id = ?";
-        $stmt = $db_conn->prepare($sql);
+        $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $current_patient_id);
         $stmt->execute();
         $stmt->bind_result($firstName, $othername, $lastName);
@@ -63,7 +63,7 @@
         }
 
         $drugListSql = "SELECT DISTINCT drug FROM medicine_list ORDER BY drug ASC";
-        $drugListResult = $db_conn->query($drugListSql);
+        $drugListResult = $conn->query($drugListSql);
 
     ?>
     

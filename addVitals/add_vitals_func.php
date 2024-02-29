@@ -2,7 +2,7 @@
 
 session_start();
 
-include "../includes/db_conn.inc.php";
+include "../includes/conn.inc.php";
 
 if( 
     !isset($_POST['upperBloodPressure']) ||
@@ -24,7 +24,7 @@ if(
     $sql = "INSERT INTO patient_vitals (temperature, bp_upper, bp_lower, patient_id)
                 VALUES(?, ?, ?, ?);";
 
-    $stmt = $db_conn -> prepare($sql);
+    $stmt = $conn -> prepare($sql);
 
     $stmt -> bind_param("ssss", $upperBloodPressure,$lowerBloodPressure, $temperature, $patientID);
 
@@ -37,7 +37,7 @@ if(
         //var_dump($result);
         
         #Retrieve patient vitals id from DB and store in session
-        $_SESSION['current_patient_vitals_id'] = mysqli_insert_id($db_conn);
+        $_SESSION['current_patient_vitals_id'] = mysqli_insert_id($conn);
        
         #If data is submitted successfully, redirect to diagnosis page
         header('Location: ../addDiagnosis/');

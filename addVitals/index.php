@@ -1,6 +1,6 @@
 <?php
     session_start();
-   // include "../includes/db_conn.inc.php";
+   // include "../includes/conn.inc.php";
     $pageTitle = "Add Vitals";
 ?>
 
@@ -54,7 +54,7 @@
 
                         if ($current_patient_id != "") {
                             $sqlQuery = "SELECT first_name, surname FROM patient_data WHERE patient_id = {$current_patient_id};";
-                            $sqlResult = mysqli_query($db_conn, $sqlQuery);
+                            $sqlResult = mysqli_query($conn, $sqlQuery);
 
                             if($sqlResult->num_rows > 0) {                            
                                 while ($row = mysqli_fetch_assoc($sqlResult)) {
@@ -65,7 +65,7 @@
                             } else {
                                 // Handle case where no results are found
                                 $patient_full_name = "No patient ID found!";
-                                die(mysqli_error($db_conn));
+                                die(mysqli_error($conn));
 
                             }
                         } else {

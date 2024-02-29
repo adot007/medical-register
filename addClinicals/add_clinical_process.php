@@ -4,10 +4,10 @@
 session_start();
 
 // Include the database connection file
-include '../includes/db_conn.inc.php';
+include '../includes/conn.inc.php';
 
 # Retrieve patient records id from DB and store it in session
-$_SESSION['current_patient_record_id'] = mysqli_insert_id($db_conn);
+$_SESSION['current_patient_record_id'] = mysqli_insert_id($conn);
 
 // Retrieve session variables or set them to empty strings if not set
 $current_patient_id = isset($_SESSION['current_patient_id']) ? $_SESSION['current_patient_id'] : "";
@@ -38,7 +38,7 @@ for ($i = 0; $i < $fileCount; $i++) {
             VALUES(?, ?, ?, ?, ?, ?);";
 
     // Prepare the SQL statement
-    $stmt = mysqli_prepare($db_conn, $sql);
+    $stmt = mysqli_prepare($conn, $sql);
 
     // Check if the preparation of the statement was successful
     if ($stmt) {
@@ -61,11 +61,11 @@ for ($i = 0; $i < $fileCount; $i++) {
         mysqli_stmt_close($stmt);
     } else {
         // Print detailed error information
-        echo "Error preparing statement: " . mysqli_error($db_conn);
+        echo "Error preparing statement: " . mysqli_error($conn);
     }
 }
 
 // Close the database connection
-mysqli_close($db_conn);
+mysqli_close($conn);
 
 

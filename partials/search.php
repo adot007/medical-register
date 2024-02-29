@@ -28,7 +28,7 @@
         <?php
 
     
-//include('../includes/db_conn.inc.php');
+//include('../includes/conn.inc.php');
         
     
         // Process search

@@ -2,7 +2,7 @@
 
 session_start();
 
-include '../includes/db_conn.inc.php';
+include '../includes/conn.inc.php';
 
 ##Check if data exists in POST superglobal(form)
 
@@ -43,8 +43,8 @@ if (
                          relation, roll_num, department, gender)
                 VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);";
     
-    #$stmt = mysqli_prepare($db_conn, $sql);
-    $stmt = $db_conn -> prepare($sql);
+    #$stmt = mysqli_prepare($conn, $sql);
+    $stmt = $conn -> prepare($sql);
 
     $stmt -> bind_param("sssssssss", $first_name, $surname, $other_names, $date_of_birth,
                            $faculty, $relation, $roll_num, $department, $gender);
@@ -58,7 +58,7 @@ if (
         //var_dump($result);
         
         #Retrieve patient ID from DB and store in session
-        $_SESSION['current_patient_id'] = mysqli_insert_id($db_conn);
+        $_SESSION['current_patient_id'] = mysqli_insert_id($conn);
        
         #If data is submitted successfully, redirect to diagnosis page
         header('Location: ../addVitals/');

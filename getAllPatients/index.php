@@ -52,7 +52,7 @@ include("../partials/navbar.php") ;
         
         <?php
 
-        include "../includes/db_conn.inc.php";
+        include "../includes/conn.inc.php";
 
         // Check connection
         if ($conn->connect_error) {

@@ -3,13 +3,13 @@
 session_start();
 
 // Include database connection
-require '../includes/db_conn.inc.php';
+require '../includes/conn.inc.php';
 
 // SQL statement to query database
 $query = "SELECT * FROM staff_data WHERE email = ? AND pw = ?;";
 
 // Prepare statement for DB
-$stmt = mysqli_prepare($db_conn, $query);
+$stmt = mysqli_prepare($conn, $query);
 
 // Check if the prepared statement is successful
 if ($stmt) {
@@ -62,9 +62,9 @@ if ($stmt) {
 
 } else {
     // Handle the error if the prepared statement fails
-    echo "Error in preparing statement: " . mysqli_error($db_conn);
+    echo "Error in preparing statement: " . mysqli_error($conn);
 }
 
 // Close the database connection when done
-mysqli_close($db_conn);
+mysqli_close($conn);
 

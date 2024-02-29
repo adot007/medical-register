@@ -41,7 +41,7 @@ include("../partials/navbar.php") ;
        
     </nav>
     <?php 
-        include "../includes/db_conn.inc.php";
+        include "../includes/conn.inc.php";
 
         $query = "SELECT patient_data.first_name, patient_data.surname, patient_data.first_visit,
                  medical_records.visit_date, medical_records.diagnosis, medical_records.prescription 

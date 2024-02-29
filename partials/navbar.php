@@ -1,3 +1,7 @@
+<?php
+    $staff_name = !isset($_SESSION['staff_name']) ? "Please log in" : $_SESSION['staff_name']; 
+?>
+
 <ul class="navbar-nav ml-auto">
 
 <!-- Nav Item - Search Dropdown (Visible Only XS) -->
@@ -91,9 +95,9 @@
 <li class="nav-item dropdown no-arrow">
     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $_SESSION['staff_name']?></span>
+        <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $staff_name ?></span>
         <img class="img-profile rounded-circle"
-            src="img/undraw_profile.svg">
+            src="../img/undraw_profile_2.svg">
     </a>
     <!-- Dropdown - User Information -->
     <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"

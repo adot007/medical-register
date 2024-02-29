@@ -61,7 +61,7 @@ include("../partials/navbar.php") ;
                 //echo $_GET['id'];
                 //include "../includes/sidebar.inc.php";
 
-                include "../includes/db_conn.inc.php";
+                include "../includes/conn.inc.php";
                 $searched_patient_id = $_GET['id'];
                 $_SESSION['searched_patient_id'] = $searched_patient_id;
 

@@ -80,7 +80,7 @@
            
         <?php
     
-        include "../includes/db_conn.inc.php";
+        include "../includes/conn.inc.php";
     
         // Process search
         if(isset($_GET['search']) && $_GET['search'] != "") {
@@ -88,7 +88,7 @@
     
             // Query to search patient by name or roll number
             $sql = "SELECT * FROM patient_data WHERE first_name LIKE '%$search%' OR surname LIKE '%$search%' OR roll_num LIKE '%$search%'";
-            $result = $db_conn->query($sql);
+            $result = $conn->query($sql);
     
             // Display search results
             if($result->num_rows > 0) {
