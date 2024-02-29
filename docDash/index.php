@@ -1,85 +1,327 @@
+<?php
+    // Start the session if it's not already started
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    // Check if the session variable exists before unsetting it
+    if (isset($_SESSION['search_made'])) {
+        unset($_SESSION['search_made']);
+}
+?>
+
+<?php
+     $pageTitle = "Doctor Dashboard";
+ ?>
 <!DOCTYPE html>
 <html lang="en">
-    
-<head>
-<?php 
-    # Continue session
-    session_start();
+<?php  
+include("../partials/head.php") ;
+?>
 
-   // include '../includes/header.inc.php';
-   //include '../includes/searchbox.inc.php';
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+    <?php  
+        include("../partials/sidebar.php") ;
+    ?>
+
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <!-- Topbar Search -->
+                    <?php  
+                        include("../partials/search.php") ;
+                    ?>
+
+                    <!-- Topbar Navbar -->
+                    <?php  
+                        include("../partials/navbar.php") ;
+                    ?>
+                   
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Doctor Dashboard</h1>
+                        <!-- <a href="../addPatient/" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                class="fas fa-plus fa-sm text-white-50"></i> Add Patient </a> -->
+                    </div>
+
+                    <!-- Content Row -->
+                    <div class="row">
+
+                        <!-- Earnings (Monthly) Card Example  -->
+                        <?php
+// Assuming you have already established a database connection
+
+// Fetch data from the appointments table along with the patient's name
+$query = "SELECT a.queue_id, a.arrival_time, a.patient_id, p.first_name, p.surname, p.other_names 
+          FROM appointments AS a
+          JOIN patient_data AS p ON a.patient_id = p.patient_id";
+$result = mysqli_query($conn, $query);
+
+// Check if there are any rows returned
+if (mysqli_num_rows($result) > 0) {
+    // Fetching and displaying data for each row
+    while ($row = mysqli_fetch_assoc($result)) {
+        // Get patient ID from the row
+        $patientId = $row['patient_id'];
+
+        // Create a link with patient ID as parameter
+        
+        echo '<div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-auto py-2">
+                    <div class="card-body">';
+                    echo '<a href="../addVitals/index.php?patient_id=' . $patientId . '" class="card-link">';
+        // Display patient's name, queue ID, and arrival time
+       
+        echo '<div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Number</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">' . $row['queue_id'] . '</div>
+                </div>
+            </div>';
+        echo '<div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Patient Name</div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">' . $row['first_name'] . ' ' . $row['surname'] . ' ' . $row['other_names'] . '</div>
+            </div>
+        </div>';
+        echo '<div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Arrival Time</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">' . $row['arrival_time'] . '</div>
+                </div>
+            </div>';
+        echo '</div></div></div>';
+    }
+} else {
+    // If no data found
+    echo "No appointments found";
+}
+
+// Close the database connection
+mysqli_close($conn);
 ?>
 
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
-</head>
 
-<body class="bg-gray-100">
+                        <!-- Earnings (Monthly) Card Example 
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                Earnings (Annual)</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
 
-    <div class="container mx-auto p-8">
-        <!-- Existing Info Cards -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            <div class="info-card bg-white p-4 rounded-md shadow-md">Card 1</div>
-            <div class="info-card bg-white p-4 rounded-md shadow-md">Card 2</div>
-            <div class="info-card bg-white p-4 rounded-md shadow-md">Card 3</div>
-            <div class="info-card bg-white p-4 rounded-md shadow-md">Card 4</div>
+                        <!-- Earnings (Monthly) Card Example 
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-info shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks
+                                            </div>
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col-auto">
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="progress progress-sm mr-2">
+                                                        <div class="progress-bar bg-info" role="progressbar"
+                                                            style="width: 50%" aria-valuenow="50" aria-valuemin="0"
+                                                            aria-valuemax="100"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+
+                        <!-- Pending Requests Card Example 
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-warning shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                Pending Requests</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+                    </div>
+
+                    <!-- Content Row -->
+
+                    <div class="col-lg-12">
+                    <?php
+                        // Check if a search has been made
+                        if (isset($_GET['search']) && !empty($_GET['search'])) {
+                            // Set the session flag to indicate that a search has been made
+                            $_SESSION['search_made'] = true;
+
+                            // Process the search
+                            $search = $_GET['search'];
+                            $sql = "SELECT * FROM patient_data WHERE first_name LIKE '%$search%' OR surname LIKE '%$search%' OR roll_num LIKE '%$search%'";
+                            $result = $conn->query($sql);
+
+                            // Display search results
+                            if ($result->num_rows > 0) {
+                                echo "<div class='col-lg-12'>";
+                                echo "<div class='card shadow mb-4'>";
+                                echo "<div class='card-header py-3'>";
+                                echo "<h6 class='m-0 font-weight-bold text-primary'>Search Results</h6>";
+                                echo "</div>";
+                                echo "<div class='card-body'>";
+                                echo "<div class='table-responsive'>";
+                                echo "<table class='table table-bordered' id='dataTable' width='100%' cellspacing='0'>";
+                                echo "<thead>";
+                                echo "<tr>";
+                                echo "<th>First Name</th>";
+                                echo "<th>Last Name</th>";
+                                echo "<th>Other Names</th>";
+                                echo "<th>Faculty</th>";
+                                echo "<th>Roll Number</th>";
+                                echo "<th>View Records</th>";
+                                echo "<th>Add New Record</th>";
+                                echo "</tr>";
+                                echo "</thead>";
+                                echo "<tbody>";
+
+                                while ($row = $result->fetch_assoc()) {
+                                    echo "<tr>";
+                                    echo "<td>" . $row['first_name'] . "</td>";
+                                    echo "<td>" . $row['surname'] . "</td>";
+                                    echo "<td>" . $row['other_names'] . "</td>";
+                                    echo "<td>" . $row['faculty'] . "</td>";
+                                    echo "<td>" . $row['roll_num'] . "</td>";
+                                    echo "<td><button class='btn btn-primary btn-sm' onclick=\"window.location.href='../medical/getPatientMedicalRecord/index.php?id={$row['patient_id']}'\">View Records</button></td>";
+                                    echo "<td><button class='btn btn-success btn-sm' onclick=\"window.location.href='../medical/addDiagnosis/'\">Add New Record</button></td>";
+                                    echo "</tr>";
+                                }
+
+                                echo "</tbody>";
+                                echo "</table>";
+                                echo "</div>";
+                                echo "</div>";
+                                echo "</div>";
+                                echo "</div>";
+                            } else {
+                                echo "<p class='col-lg-12 mt-4 text-red-500'>No patients found for this search.</p>";
+                            }
+                        } else {
+                            // Check if a search has been made in previous sessions
+                            if (isset($_SESSION['search_made']) && $_SESSION['search_made'] === true) {
+                                echo "<p class='col-lg-12 mt-4 text-red-500'>No patients found for this search.</p>";
+                            }
+                        }
+                    ?>
+                    </div>
+                        
+
+                     
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; RMU</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
         </div>
+        <!-- End of Content Wrapper -->
 
-        <!-- Add New Patient Button 
-        <button onclick="window.location.href='../pages/add_patient.php'"
-            class="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">
-            Add New Patient
-        </button>
+    </div>
+    <!-- End of Page Wrapper -->
 
-        Search Input -->
-        <!-- input type="search" name="search" id="search"
-            class="mt-4 p-2 border rounded-md w-full sm:w-auto" 
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
 
-        <div class="mt-4 relative">
-            <input type="search" name="search" id="search"
-             class="pl-10 pr-4 p-2 border rounded-md w-full sm:w-auto focus:outline-none focus:ring focus:border-blue-300"
-              placeholder="Search...">
-             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                 <i class="fas fa-search text-gray-500"></i>
-            </div>
-        </div>-->
-
-        <div id="websocketStatus"></div>
-        
-        <script>
-            // WebSocket Connection
-            const socket = new WebSocket('ws://your-websocket-server-url');
-
-            socket.addEventListener('open', (event) => {
-                document.getElementById('websocketStatus').innerText = 'WebSocket Connection Established';
-            });
-
-            socket.addEventListener('close', (event) => {
-                document.getElementById('websocketStatus').innerText = 'WebSocket Connection Closed';
-            });
-
-            socket.addEventListener('error', (event) => {
-                document.getElementById('websocketStatus').innerText = 'WebSocket Connection Error';
-            });
-        </script>
-
-        <!-- Queue of Incoming Patients -->
-        <div class="mt-8">
-            <h2 class="text-xl font-semibold mb-4">Queue of Incoming Patients</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                <!-- Example patient card, replace with actual content from the WebSocket -->
-                <div class="bg-white p-4 rounded-md shadow-md">Patient 1</div>
-                <div class="bg-white p-4 rounded-md shadow-md">Patient 2</div>
-                <div class="bg-white p-4 rounded-md shadow-md">Patient 3</div>
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
             </div>
         </div>
     </div>
 
-    <?php include '../includes/footer.inc.php' ?>
+    <!-- Bootstrap core JavaScript-->
+    <script src="../assets/vendor/jquery/jquery.min.js"></script>
+    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+    <!-- Core plugin JavaScript-->
+    <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="../assets/js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="../assets/vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="../assets/js/demo/chart-area-demo.js"></script>
+    <script src="../assets/js/demo/chart-pie-demo.js"></script>
+    <?php
+// Clear the session flag after displaying the search results
+unset($_SESSION['search_made']);
+?>
 </body>
 
 </html>
