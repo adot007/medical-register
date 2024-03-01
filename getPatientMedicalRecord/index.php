@@ -54,9 +54,10 @@
         <main class="flex-1 p-4">
             <div class="max-w-fit mx-auto bg-white p-8 rounded-md shadow-md">
         
-            <button type="button" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+            <button type="button" class="btn btn-primary text-white px-4 py-2 rounded-md hover:bg-blue-600"
                     onclick = "window.location.href='../addDiagnosis/'">
-                    Add New Record
+                    <i class="fas fa-plus fa-sm text-white-50"></i>
+                     Add New Record
             </button><br /><br />
 
             <?php 
@@ -64,7 +65,7 @@
                 //include "../includes/sidebar.inc.php";
 
                 //include "../includes/conn.inc.php";
-                $searched_patient_id = $_GET['id'];
+                $searched_patient_id = isset($_GET['id']) ? $_GET['id'] : "" ;
                 $_SESSION['searched_patient_id'] = $searched_patient_id;
 
                 // Number of records to display initially
@@ -97,7 +98,7 @@
                         "><td class='border px-4 py-2'>" . date('d-m-Y', strtotime($row['visit_date'])) .
                         "</td><td class='border px-4 py-2'>" . $row['diagnosis'] .
                         "</td><td class='border px-4 py-2'>" . $row['prescription'] .
-                        "</td><td class='border px-4 py-2'><button onclick=\"window.location.href='../getPatientVisitDetails/index.php?id={$row['record_id']}'\">View Details</button>".
+                        "</td><td class='border px-4 py-2'><button class='btn btn-success' onclick=\"window.location.href='../getPatientVisitDetails/index.php?id={$row['record_id']}'\">View Details</button>".
                         "</td></tr>";
                 }
                     echo "</tbody></table>";

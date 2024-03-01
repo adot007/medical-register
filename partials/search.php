@@ -18,7 +18,7 @@
             placeholder="Search Patient by Name or Roll Number..." aria-label="Search" aria-describedby="basic-addon2">
 
         <div class="input-group-append">
-            <button type="submit" class="btn bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">
+            <button type="submit" class="btn btn-success bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">
                 Search
             </button>
         </div>
