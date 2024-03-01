@@ -51,6 +51,8 @@
 
                     <?php 
                         $current_patient_id = isset($_SESSION['current_patient_id']) ? $_SESSION['current_patient_id'] : "";
+                        $patient_full_name = "No patient selected...";
+
 
                         if ($current_patient_id != "") {
                             $sqlQuery = "SELECT first_name, surname FROM patient_data WHERE patient_id = {$current_patient_id};";
@@ -69,7 +71,7 @@
 
                             }
                         } else {
-                            echo "No patient ID set!";
+                           // echo "No patient ID set!";
                         }
                     ?>
 

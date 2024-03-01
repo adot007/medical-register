@@ -1,7 +1,6 @@
 <?php
 
-    define("DB_HOST", "localhost");
-    //define("DB_USER", "phpmyadmin");
+    define("DB_HOST", "localhost");    
     define("DB_USER", "root");
     define("DB_PASSWORD", "");
     define("DB_DATABASE", "med-register");
@@ -15,3 +14,6 @@
         mysqli_set_charset($conn, "utf8");
 
     }
+
+
+    //define("DB_USER", "phpmyadmin");

@@ -43,6 +43,7 @@
             // echo "First Name: $firstName<br>";
             // echo "Last Name: $lastName<br>";
             $fullName = $firstName;
+            $fullName .= " ";
             $fullName .= $othername;
             $fullName .= " "; 
             $fullName .= $lastName;
