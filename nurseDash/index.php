@@ -15,8 +15,9 @@
  ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <?php  
-include("../partials/head.php") ;
+    include("../partials/head.php") ;
 ?>
 
 <body id="page-top">
@@ -157,68 +158,68 @@ include("../partials/head.php") ;
                     <!-- Content Row -->
 
                     <div class="col-lg-12">
-                    <?php
-                        // Check if a search has been made
-                        if (isset($_GET['search']) && !empty($_GET['search'])) {
-                            // Set the session flag to indicate that a search has been made
-                            $_SESSION['search_made'] = true;
+                        <?php
+                            // Check if a search has been made
+                            if (isset($_GET['search']) && !empty($_GET['search'])) {
+                                // Set the session flag to indicate that a search has been made
+                                $_SESSION['search_made'] = true;
 
-                            // Process the search
-                            $search = $_GET['search'];
-                            $sql = "SELECT * FROM patient_data WHERE first_name LIKE '%$search%' OR surname LIKE '%$search%' OR roll_num LIKE '%$search%'";
-                            $result = $conn->query($sql);
+                                // Process the search
+                                $search = $_GET['search'];
+                                $sql = "SELECT * FROM patient_data WHERE first_name LIKE '%$search%' OR surname LIKE '%$search%' OR roll_num LIKE '%$search%'";
+                                $result = $conn->query($sql);
 
-                            // Display search results
-                            if ($result->num_rows > 0) {
-                                echo "<div class='col-lg-12'>";
-                                echo "<div class='card shadow mb-4'>";
-                                echo "<div class='card-header py-3'>";
-                                echo "<h6 class='m-0 font-weight-bold text-primary'>Search Results</h6>";
-                                echo "</div>";
-                                echo "<div class='card-body'>";
-                                echo "<div class='table-responsive'>";
-                                echo "<table class='table table-bordered' id='dataTable' width='100%' cellspacing='0'>";
-                                echo "<thead>";
-                                echo "<tr>";
-                                echo "<th>First Name</th>";
-                                echo "<th>Last Name</th>";
-                                echo "<th>Other Names</th>";
-                                echo "<th>Faculty</th>";
-                                echo "<th>Roll Number</th>";
-                                echo "<th>View Records</th>";
-                                echo "<th>Add New Record</th>";
-                                echo "</tr>";
-                                echo "</thead>";
-                                echo "<tbody>";
-
-                                while ($row = $result->fetch_assoc()) {
+                                // Display search results
+                                if ($result->num_rows > 0) {
+                                    echo "<div class='col-lg-12'>";
+                                    echo "<div class='card shadow mb-4'>";
+                                    echo "<div class='card-header py-3'>";
+                                    echo "<h6 class='m-0 font-weight-bold text-primary'>Search Results</h6>";
+                                    echo "</div>";
+                                    echo "<div class='card-body'>";
+                                    echo "<div class='table-responsive'>";
+                                    echo "<table class='table table-bordered' id='dataTable' width='100%' cellspacing='0'>";
+                                    echo "<thead>";
                                     echo "<tr>";
-                                    echo "<td>" . $row['first_name'] . "</td>";
-                                    echo "<td>" . $row['surname'] . "</td>";
-                                    echo "<td>" . $row['other_names'] . "</td>";
-                                    echo "<td>" . $row['faculty'] . "</td>";
-                                    echo "<td>" . $row['roll_num'] . "</td>";
-                                    echo "<td><button class='btn btn-primary btn-sm' onclick=\"window.location.href='../medical/getPatientMedicalRecord/index.php?id={$row['patient_id']}'\">View Records</button></td>";
-                                    echo "<td><button class='btn btn-success btn-sm' onclick=\"window.location.href='../medical/addDiagnosis/'\">Add New Record</button></td>";
+                                    echo "<th>First Name</th>";
+                                    echo "<th>Last Name</th>";
+                                    echo "<th>Other Names</th>";
+                                    echo "<th>Faculty</th>";
+                                    echo "<th>Roll Number</th>";
+                                    echo "<th>View Records</th>";
+                                    echo "<th>Add New Record</th>";
                                     echo "</tr>";
-                                }
+                                    echo "</thead>";
+                                    echo "<tbody>";
 
-                                echo "</tbody>";
-                                echo "</table>";
-                                echo "</div>";
-                                echo "</div>";
-                                echo "</div>";
-                                echo "</div>";
+                                    while ($row = $result->fetch_assoc()) {
+                                        echo "<tr>";
+                                        echo "<td>" . $row['first_name'] . "</td>";
+                                        echo "<td>" . $row['surname'] . "</td>";
+                                        echo "<td>" . $row['other_names'] . "</td>";
+                                        echo "<td>" . $row['faculty'] . "</td>";
+                                        echo "<td>" . $row['roll_num'] . "</td>";
+                                        echo "<td><button class='btn btn-primary btn-sm' onclick=\"window.location.href='../getPatientMedicalRecord/index.php?id={$row['patient_id']}'\">View Records</button></td>";
+                                        echo "<td><button class='btn btn-success btn-sm' onclick=\"window.location.href='../addDiagnosis/'\">Add New Record</button></td>";
+                                        echo "</tr>";
+                                    }
+
+                                    echo "</tbody>";
+                                    echo "</table>";
+                                    echo "</div>";
+                                    echo "</div>";
+                                    echo "</div>";
+                                    echo "</div>";
+                                } else {
+                                    echo "<p class='col-lg-12 mt-4 text-red-500'>No patients found for this search.</p>";
+                                }
                             } else {
-                                echo "<p class='col-lg-12 mt-4 text-red-500'>No patients found for this search.</p>";
+                                // Check if a search has been made in previous sessions
+                                if (isset($_SESSION['search_made']) && $_SESSION['search_made'] === true) {
+                                    echo "<p class='col-lg-12 mt-4 text-red-500'>No patients found for this search.</p>";
+                                }
                             }
-                        } else {
-                            // Check if a search has been made in previous sessions
-                            if (isset($_SESSION['search_made']) && $_SESSION['search_made'] === true) {
-                                echo "<p class='col-lg-12 mt-4 text-red-500'>No patients found for this search.</p>";
-                            }
-                        }
-                    ?>
+                        ?>
                     </div>
                         
 

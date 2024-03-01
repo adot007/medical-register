@@ -25,21 +25,17 @@
     </div>
 </form>
            
-        <?php
-
+        <?php   
     
-//include('../includes/conn.inc.php');
+            // Process search
+            if(isset($_GET['search']) && $_GET['search'] != "") {
+                $search = $_GET['search'];            
         
-    
-        // Process search
-        if(isset($_GET['search']) && $_GET['search'] != "") {
-            $search = $_GET['search'];            
-    
-            // Query to search patient by name or roll number
-            $sql = "SELECT * FROM patient_data WHERE first_name LIKE '%$search%' OR surname LIKE '%$search%' OR roll_num LIKE '%$search%'";
-            $result = $conn->query($sql);
-        }
-    ?>
+                // Query to search patient by name or roll number
+                $sql = "SELECT * FROM patient_data WHERE first_name LIKE '%$search%' OR surname LIKE '%$search%' OR roll_num LIKE '%$search%'";
+                $result = $conn->query($sql);
+            }
+        ?>
         
 
          

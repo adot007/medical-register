@@ -2,7 +2,7 @@
  <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
 <!-- Sidebar - Brand -->
-<a class="sidebar-brand d-flex align-items-center justify-content-center" href="/medical/index.php">
+<a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
     <div class="sidebar-brand-icon rotate-n-15">
         <i class="fas fa-laugh-wink"></i>
     </div>
@@ -13,11 +13,25 @@
 <hr class="sidebar-divider my-0">
 
 <!-- Nav Item - Dashboard -->
-<li class="nav-item active">
-    <a class="nav-link" href="/medical/index.php">
-       
-        <span>Dashboard</span></a>
-</li>
+<?php
+    if(isset($_SESSION['role']) && $_SESSION['role'] == "nurse"){
+        echo "<li class='nav-item active'>";
+        echo "<a class='nav-link' href='../nurseDash/'>";        
+        echo "<span>Dashboard</span></a>";
+        echo "</li>";
+    } elseif(isset($_SESSION["role"]) && $_SESSION["role"] == "doctor"){
+        echo "<li class='nav-item active'>";
+        echo "<a class='nav-link' href='../docDash/'>";        
+        echo "<span>Dashboard</span></a>";
+        echo "</li>";
+    } elseif(isset($_SESSION["role"]) && $_SESSION["role"] == "admin"){
+        echo "<li class='nav-item active'>";
+        echo "<a class='nav-link' href='../admin/'>";        
+        echo "<span>Dashboard</span></a>";
+        echo "</li>";
+    }
+?>
+
 
 <!-- Divider -->
 <hr class="sidebar-divider">
@@ -54,8 +68,8 @@
         data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Records:</h6>
-            <a class="collapse-item" href="/medical/getAllPatients/">All Patients</a>
-            <a class="collapse-item" href="/medical/getAllRecords/">All Records</a>
+            <a class="collapse-item" href="../medical-register/getAllPatients/">All Patients</a>
+            <a class="collapse-item" href="../medical-register/getAllRecords/">All Records</a>
         </div>
     </div>
 </li>

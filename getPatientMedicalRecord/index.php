@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php  
-include("../partials/head.php") ;
+    include("../partials/head.php") ;
 ?>
 <body id="page-top">
 
@@ -14,9 +14,10 @@ include("../partials/head.php") ;
     <div id="wrapper">
 
     <?php  
-include("../partials/sidebar.php") ;
-?>
-      <div id="content-wrapper" class="d-flex flex-column">
+        include("../partials/sidebar.php") ;
+    ?>
+   
+   <div id="content-wrapper" class="d-flex flex-column">
 
 <!-- Main Content -->
 <div id="content">
@@ -31,12 +32,13 @@ include("../partials/sidebar.php") ;
 
         <!-- Topbar Search -->
         <?php  
-include("../partials/search.php") ;
-?>
+            include("../partials/search.php") ;
+        ?>
+
         <!-- Topbar Navbar -->
         <?php  
-include("../partials/navbar.php") ;
-?>
+            include("../partials/navbar.php") ;
+        ?>
        
     </nav>
 
@@ -61,7 +63,7 @@ include("../partials/navbar.php") ;
                 //echo $_GET['id'];
                 //include "../includes/sidebar.inc.php";
 
-                include "../includes/conn.inc.php";
+                //include "../includes/conn.inc.php";
                 $searched_patient_id = $_GET['id'];
                 $_SESSION['searched_patient_id'] = $searched_patient_id;
 
@@ -76,22 +78,26 @@ include("../partials/navbar.php") ;
 
                 $offset = ($page - 1) * $limit;
 
-                $sql = "SELECT * FROM medical_records WHERE patient_id = '$searched_patient_id' ORDER BY visit_date DESC LIMIT $limit";
-                $result = $conn -> query($sql);
+                $sqlQuery = "SELECT * FROM medical_records WHERE patient_id = '$searched_patient_id' ORDER BY visit_date DESC LIMIT $limit";
+                $sqlResult = $conn -> query($sqlQuery);
 
                 // Display search results
-                if($result->num_rows > 0) {
+                if($sqlResult-> num_rows > 0) {
                     echo "<table class='table-auto mb-8'>";
-                    echo "<thead><tr><th class='border px-4 py-2'>Visit Date</th><th class='border px-4 py-2'>Diagnosis</th><th class='border px-4 py-2'>Prescription</th><th class='border px-4 py-2'>View Details</th></tr></thead>";
+                    echo "<thead><tr><th class='border px-4 py-2'>Visit Date</th>
+                            <th class='border px-4 py-2'>Diagnosis</th>
+                            <th class='border px-4 py-2'>Prescription</th>
+                            <th class='border px-4 py-2'>View Details</th>
+                            </tr></thead>";
                     echo "<tbody>";
 
-                    while($row = $result->fetch_assoc()) {
+                    while($row = $sqlResult->fetch_assoc()) {
                         //print_r($row);
                         echo "<tr class='hover:bg-gray-100 ' id =". $row['record_id'] .
                         "><td class='border px-4 py-2'>" . date('d-m-Y', strtotime($row['visit_date'])) .
                         "</td><td class='border px-4 py-2'>" . $row['diagnosis'] .
                         "</td><td class='border px-4 py-2'>" . $row['prescription'] .
-                        "</td><td class='border px-4 py-2'><button>View Details</button>".
+                        "</td><td class='border px-4 py-2'><button onclick=\"window.location.href='../getPatientVisitDetails/index.php?id={$row['record_id']}'\">View Details</button>".
                         "</td></tr>";
                 }
                     echo "</tbody></table>";
