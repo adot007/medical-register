@@ -4,10 +4,14 @@
         session_start();
     }
 
+    
+
     // Check if the session variable exists before unsetting it
     if (isset($_SESSION['search_made'])) {
         unset($_SESSION['search_made']);
 }
+
+//echo "<script>alert('".$_GET['search']."')</script>";
 ?>
 
 <?php
@@ -205,7 +209,7 @@ mysqli_close($conn);
                             $search = $_GET['search'];
                             $sql = "SELECT * FROM patient_data WHERE first_name LIKE '%$search%' OR surname LIKE '%$search%' OR roll_num LIKE '%$search%'";
                             $result = $conn->query($sql);
-
+                            
                             // Display search results
                             if ($result->num_rows > 0) {
                                 echo "<div class='col-lg-12'>";
