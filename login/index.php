@@ -1,33 +1,86 @@
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
-    <link rel = "stylesheet" href="../css/tailwind.min.css" >
-    <title>RMU - Login</title>
+	<title>Sickbay-Login</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="images/icons/rmu.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+<!--===============================================================================================-->
 </head>
+<body>
+	
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100">
+				<div class="login100-pic js-tilt" data-tilt>
+					<img src="images/rmu.jpg" alt="IMG">
+				</div>
 
-<body class="bg-gray-100 flex items-center justify-center h-screen">
+				<form class="login100-form validate-form" method="POST" name="login" action="login.inc.php">
+					<span class="login100-form-title">
+						RMU Sickbay-Login
+					</span>
 
-    <div class="bg-white p-8 rounded-md shadow-md">
-        <form action="../login/login_func.php" method="POST" class="flex flex-col space-y-4">
-            
-            <label for="email" class="text-sm font-medium text-gray-600">E-mail:</label>
-            <input type="text" name="email" id="email" class="mt-1 p-2 border rounded-md">
-            
-            <label for="password" class="text-sm font-medium text-gray-600">Password:</label>
-            <input type="password" name="password" id="password" class="mt-1 p-2 border rounded-md">
-            
-            <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">
-                Login
-            </button>
-        
-        </form>
-    </div>
-    <?php include '../includes/footer.inc.php' ?>
+					<div class="wrap-input100 validate-input" data-validate = "Valid email is required">
+						<input class="input100" type="email" name="email" required placeholder="Enter E-Mail..." >
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-user" aria-hidden="true"></i>
+						</span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate="Password is required">
+						<input class="input100" type="password" name="password" required placeholder="Enter Password..." >
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-lock" aria-hidden="true"></i>
+						</span>
+					</div>
+					
+					
+					<div class="container-login100-form-btn">
+						<button class="login100-form-btn" name="Login" type="submit">
+							Login
+						</button>
+					</div>				
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	
+
+	
+<!--===============================================================================================-->	
+	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/bootstrap/js/popper.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/tilt/tilt.jquery.min.js"></script>
+	<script >
+		$('.js-tilt').tilt({
+			scale: 1.1
+		})
+	</script>
+<!--===============================================================================================-->
+	<script src="js/main.js"></script>
+
 </body>
-
 </html>
