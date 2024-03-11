@@ -11,6 +11,8 @@
   }
   $diagnosis = $_POST['diagnosis'];
   $prescription = $_POST['prescription'];
+  $frequency = $_POST['frequency'];
+  $duration = $_POST['duration'];
   $notes = $_POST['notes'];
   //If the staff ID is not SET, submit as NULL to the DB; else use the staff ID'
   $staff_id = !isset($_SESSION['staff_id']) ? NULL : $_SESSION['staff_id'];
@@ -20,12 +22,12 @@
 
   # $[] = $_POST[''];
 
-  $sql = "INSERT INTO medical_records (patient_id, staff_id, vitals_id, diagnosis, prescription, notes)
-          VALUES(?, ?, ?, ?, ?, ?);";
+  $sql = "INSERT INTO medical_records (patient_id, staff_id, vitals_id, diagnosis, prescription, notes, frequency, duration)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
   $stmt = mysqli_prepare($conn, $sql);
 
-  mysqli_stmt_bind_param($stmt, "ssssss", $current_patient_id, $staff_id, $vitals_id, $diagnosis, $prescription, $notes);
+  mysqli_stmt_bind_param($stmt, "ssssssss", $current_patient_id, $staff_id, $vitals_id, $diagnosis, $prescription, $notes, $frequency, $duration);
 
   mysqli_execute($stmt);
   

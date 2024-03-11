@@ -68,8 +68,8 @@
         data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Records:</h6>
-            <a class="collapse-item" href="../medical-register/getAllPatients/">All Patients</a>
-            <a class="collapse-item" href="../medical-register/getAllRecords/">All Records</a>
+            <a class="collapse-item" href="/medical-register/getAllPatients/">All Patients</a>
+            <a class="collapse-item" href="/medical-register/getAllRecords/">All Records</a>
         </div>
     </div>
 </li>

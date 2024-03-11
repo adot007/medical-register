@@ -134,6 +134,10 @@
                                         </select>
                                     </div>
 
+                                  
+
+<div id="selectedDrugs" class="mt-2"></div>
+
                                     <div id="selectedDrugs" class="mt-2"></div>
                                 </div>
 
@@ -143,9 +147,11 @@
                                 </div>
 
                                 <div class="mt-6">
-                                    <input type="submit" onclick="window.location.href='../addClinicals/'" value="Add Clinical Files" name="goToClinical" class="btn btn-primary btn-user btn-block">
-                                    <button type="submit" onclick="window.location.href='/medical/'" name="goToNurseDash" class="btn btn-primary btn-user btn-block mt-3">Submit</button>
+                                    <!-- <input type="submit" onclick="window.location.href='../addClinicals/'" value="Add Clinical Files" name="goToClinical" class="btn btn-primary btn-user btn-block"> -->
+                                    <button type="submit" onclick="window.location.href='../nurseDash/'" name="goToNurseDash" class="btn btn-primary btn-user btn-block mt-3">Submit</button>
+                                    <button type="button" onclick="printFormData()" class="btn btn-primary btn-user btn-block mt-3">Print</button>
                                 </div>
+                                
 
                             </form>
                         </div>
@@ -190,6 +196,21 @@
                         <button type="button" class="text-xs font-semibold focus:outline-none" onclick="removeDrug(this)">X</button>
                     `;
 
+                    const frequencyInput = document.createElement('input');
+            frequencyInput.type = 'text';
+            frequencyInput.name = 'frequency[]';
+            frequencyInput.classList.add('form-control', 'form-control-user', 'mt-1');
+            frequencyInput.placeholder = 'Enter frequency';
+
+            const durationInput = document.createElement('input');
+            durationInput.type = 'text';
+            durationInput.name = 'duration[]';
+            durationInput.classList.add('form-control', 'form-control-user', 'mt-1');
+            durationInput.placeholder = 'Enter duration';
+
+            option.appendChild(frequencyInput);
+            option.appendChild(durationInput);
+
                     selectedDrugsDiv.appendChild(option);
                     prescriptionTextarea.value += selectedDrug + '\n';
                     drugSelect.value = ''; // Reset dropdown value
@@ -206,6 +227,63 @@
             prescriptionTextarea.value = prescriptionTextarea.value.replace(drugToRemove + '\n', '');
         }
     </script>
+
+
+<script>
+    function printFormData() {
+        // Open a new tab
+        var printWindow = window.open('', '_blank');
+        
+        // Construct the printable content
+        var printableContent = `
+            <h2>Add New Record</h2>
+            <p><strong>Patient Name:</strong> <?php echo htmlspecialchars($fullName); ?></p>
+        `;
+        
+        // Check if diagnosis is set
+        <?php if(isset($_POST['diagnosis'])): ?>
+            printableContent += `<p><strong>Diagnosis:</strong> <?php echo htmlspecialchars($_POST['diagnosis']); ?></p>`;
+        <?php endif; ?>
+        
+        // Construct the prescription list with frequency and duration
+        printableContent += '<p><strong>Prescription:</strong></p><ul>';
+        <?php 
+        if(isset($_POST['prescription'])) {
+            foreach($_POST['prescription'] as $key => $prescription) {
+                if(!empty($prescription)) {
+                    // Check if frequency and duration are set for the current prescription
+                    if(isset($_POST['frequency'][$key]) && isset($_POST['duration'][$key])) {
+                        var frequency = '<?php echo htmlspecialchars($_POST['frequency'][$key]); ?>';
+                        var duration = '<?php echo htmlspecialchars($_POST['duration'][$key]); ?>';
+                        printableContent += `<li>${prescription} (Frequency: ${frequency}, Duration: ${duration})</li>`;
+                    } else {
+                        printableContent += `<li>${prescription} (Frequency and Duration not specified)</li>`;
+                    }
+                }
+            }
+        } else {
+            printableContent += `<li>No drugs selected</li>`;
+        }
+        ?>
+        printableContent += '</ul>';
+        
+        // Check if notes is set
+        <?php if(isset($_POST['notes'])): ?>
+            printableContent += `<p><strong>Notes:</strong> <?php echo htmlspecialchars($_POST['notes']); ?></p>`;
+        <?php endif; ?>
+        
+        // Write the content to the new tab
+        printWindow.document.open();
+        printWindow.document.write(printableContent);
+        printWindow.document.close();
+        
+        // Print the content
+        printWindow.print();
+    }
+</script>
+
+
+
 </body>
 
 </html>

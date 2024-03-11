@@ -46,7 +46,7 @@
         <div class="col-lg-7 mx-auto mb-4">
             <div class="card border-primary shadow h-100 py-2">
                 <div class="card-body">
-                    <h2 class="text-2xl font-semibold mb-4">Clinical Data</h2>
+                    <h2 class="text-2xl font-semibold mb-4">Vitals</h2>
                     <form action="add_vitals_func.php" method="POST">
 
                     <?php 
