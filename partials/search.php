@@ -1,3 +1,15 @@
+<?php
+    // Start the session if it's not already started
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    // Check if the session variable exists before unsetting it
+    if (isset($_SESSION['search_made'])) {
+        unset($_SESSION['search_made']);
+    }
+?>
+
 <!--<form
                         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
@@ -39,3 +51,4 @@
         
 
          
+  

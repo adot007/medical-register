@@ -1,4 +1,3 @@
-<!--GET all medical records -->
 <?php     $pageTitle = "Records";
  ?>
 <!DOCTYPE html>
@@ -29,8 +28,9 @@ include("../partials/sidebar.php") ;
 
         <!-- Topbar Search -->
         <?php  
-include("../partials/search.php") ;
-?>
+                // Include the search bar
+                include("../partials/search.php");
+            ?>
         <!-- Topbar Navbar -->
         <?php  
 include("../partials/navbar.php") ;
@@ -47,56 +47,43 @@ include("../partials/navbar.php") ;
             </div>-->
         </aside>
 
-    <main class="flex-1 p-4">
-    <h2 class='mt-6 text-xl font-bold mb-4'>Patient Records:</h2>
-        
-        <?php
+        <main class="flex-1 p-4">
+                    <h2 class='mt-6 text-xl font-bold mb-4'>Patient Records:</h2>
 
-        //include "../includes/conn.inc.php";
+                    <?php
+                    // Check connection
+                    if ($conn->connect_error) {
+                        die("Connection failed: " . $conn->connect_error);
+                    }
 
-        // Check connection
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
+                    $query = "SELECT patient_id, first_name, surname, first_visit, roll_num, faculty, relation from patient_data";
 
-        $query = "SELECT patient_id, first_name, surname, first_visit, roll_num, faculty, relation from patient_data";
+                    $result = $conn->query($query);
 
-        //print_r($query);
+                    if ($result && $result->num_rows > 0) {
+                        // Display the search results if available
+                        echo "<div class='h-full overflow-y-scroll mx-auto w-3/4 bg-white p-4 shadow-md rounded mt-4'>";
+                        echo "<table class='table-auto mb-8'>";
+                        echo "<thead><tr><th class='border px-4 py-2'>First Name</th>
+                                <th class='border px-4 py-2'>Last Name</th>
+                                <th class='border px-4 py-2'>First Visit</th>
+                                <th class='border px-4 py-2'>Roll Number</th>
+                                <th class='border px-4 py-2'>Faculty</th>
+                                <th class='border px-4 py-2'>Relation</th></tr></thead>";
+                        echo "<tbody>";
 
-        $result = $conn->query($query);
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<tr id=" . $row['patient_id'] . " ><td class='border px-4 py-2'>" . $row['first_name'] . "</td>
+                                    <td class='border px-4 py-2'>" . $row['surname'] . "</td>
+                                    <td class='border px-4 py-2'>" . $row['first_visit'] . "</td>
+                                    <td class='border px-4 py-2'>" . $row['roll_num'] . "</td>
+                                    <td class='border px-4 py-2'>" . $row['faculty'] . "</td>
+                                    <td class='border px-4 py-2'>" . $row['relation'] . "</td></tr>";
+                        }
 
-        //var_dump($result);  
-
-        if ($result) {
-       
-
-        if($result->num_rows > 0)
-            // Process the results here
-            echo "";
-            echo "<div class='h-full overflow-y-scroll mx-auto w-3/4 bg-white p-4 shadow-md rounded mt-4'>";
-            echo "<table class='table-auto mb-8'>";
-            echo "<thead><tr><th class='border px-4 py-2'>First Name</th>
-                    <th class='border px-4 py-2'>Last Name</th>
-                    <th class='border px-4 py-2'>First Visit</th>
-                    <th class='border px-4 py-2'>Roll Number</th>
-                    <th class='border px-4 py-2'>Faculty</th>
-                    <th class='border px-4 py-2'>Relation</th></tr></thead>";
-            echo "<tbody>";
-
-            while ($row = $result->fetch_assoc()) {
-            // Process each row of the result set
-            //var_dump($row);
-            
-            echo "<tr id=".$row['patient_id']." ><td class='border px-4 py-2'>". $row['first_name']."</td>
-                    <td class='border px-4 py-2'>". $row['surname']."</td>
-                    <td class='border px-4 py-2'>". $row['first_visit']."</td>
-                    <td class='border px-4 py-2'>". $row['roll_num']."</td>
-                    <td class='border px-4 py-2'>". $row['faculty']."</td>
-                    <td class='border px-4 py-2'>". $row['relation']."</td></tr>";
-            }
-
-            echo "</tbody>";
-            echo "</div>";
+                        echo "</tbody>";
+                        echo "</table>";
+                        echo "</div>";
 
         // Free the result set
         $result->free();
@@ -108,7 +95,9 @@ include("../partials/navbar.php") ;
         ?>
     </main>
 
-</div>
+    </div>
+        </div>
+    </div>
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
@@ -126,6 +115,40 @@ include("../partials/navbar.php") ;
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
+
+     <!-- Custom script for modal -->
+     <!-- <script>
+        $(document).ready(function () {
+            // Show modal on search button click
+            $('#searchButton').click(function () {
+                $('#searchModal').modal('show');
+            });
+        });
+    </script>
+
+    
+    <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Search Results</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    
+                  
+                    <p>No records found.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
 
 </body>
 </html>

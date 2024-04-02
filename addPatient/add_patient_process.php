@@ -2,6 +2,8 @@
 
 session_start();
 
+$_SESSION['current_patient_id'] = $patient_id;
+
 include '../includes/conn.inc.php';
 
 ##Check if data exists in POST superglobal(form)
@@ -52,18 +54,37 @@ if (
     $result = mysqli_stmt_execute($stmt);
 
     if (!$result) {
-        echo "Error executing statement: " . mysqli_stmt_error($stmt);
+        echo "Error executing statement: " . $stmt->error;
     } else {
+        // Data submitted successfully
         echo "<script>alert(\"Data submitted successfully!\")</script>";
-        //var_dump($result);
         
-        #Retrieve patient ID from DB and store in session
-        $_SESSION['current_patient_id'] = mysqli_insert_id($conn);
-       
-        #If data is submitted successfully, redirect to diagnosis page
-        header('Location: ../addVitals/');
+        // Retrieve patient ID from the database
+        $patient_id = $conn->insert_id;
+
+        $sql = "INSERT INTO appointments (patient_id, arrival_time) VALUES (?, NOW())";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $patient_id);
+        $result = $stmt->execute();
+
+
+        // Store patient ID in session
+        $_SESSION['current_patient_id'] = $patient_id;
+
+        // Check which submit button was clicked and redirect accordingly
+        if (isset($_POST['submit_vitals'])) {
+            // Redirect to add vitals page
+            header('Location: ../addVitals/');
+            exit(); // Stop further execution
+        } elseif (isset($_POST['submit_appointments'])) {
+            // Redirect to nurse dashboard
+            header('Location: ../nurseDash/');
+            exit(); // Stop further execution
+        }
     }
-
-    mysqli_stmt_close($stmt);
+    
+    // Close the statement and database connection
+    $stmt->close();
+    $conn->close();
 }
-
+?>

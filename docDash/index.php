@@ -16,6 +16,7 @@
 
 <?php
      $pageTitle = "Doctor Dashboard";
+     
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,8 +29,9 @@ include("../partials/head.php") ;
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-    <?php  
+    <?php   
         include("../partials/sidebar.php") ;
+        
     ?>
 
         <!-- End of Sidebar -->
