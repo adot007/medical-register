@@ -114,33 +114,39 @@
                                         <input type="text" name="patient_name" id="patient_name" readonly class="form-control form-control-user mt-1" value="<?php echo $fullName; ?>">
                                     </div>
 
-                                    <!-- Input field for diagnosis -->
                                     <div class="form-group">
                                         <label for="diagnosis" class="block text-gray-600">Diagnosis:</label>
-                                        <textarea name="diagnosis" id="diagnosis" class="form-control form-control-user mt-1" required></textarea>
+                                        <textarea name="diagnosis" id="diagnosis" class="form-control form-control-user mt-1"></textarea>
                                     </div>
+
+                                    <div id="selectedDrugs" class="mt-2"></div>
+                               
 
                                     <!-- Prescription selection -->
                                     <div class="form-group">
-                                        <label for="prescription" class="block text-gray-600">Prescription:</label>
+                                    <label for="prescription" class="block text-gray-600">Prescription:</label>
 
-                                        <div class="relative inline-block w-full text-gray-700">
-                                            <!-- Dropdown for drug selection -->
-                                            <select name="prescription[]" id="drugSelect" class="w-full appearance-none px-4 py-2 border rounded-md">
-                                                <?php
-                                                // Check if there are drugs available
-                                                if ($drugListResult->num_rows > 0) {
-                                                    // Output data of each row
-                                                    while ($row = $drugListResult->fetch_assoc()) {
-                                                        echo "<option value=\"" . $row["drug"] . "\">" . $row["drug"] . "</option>";
-                                                    }
-                                                } else {
-                                                    // Display a message if no drugs are available
-                                                    echo "<option value=\"\">No drugs available</option>";
+                                    <div class="relative inline-block w-full text-gray-700">
+                                        <select name="prescription[]" id="drugSelect" class="w-full appearance-none px-4 py-2 border rounded-md">
+                                            <?php
+                                            // Check if there are results
+                                            if ($drugListResult->num_rows > 0) {
+                                                // Output data of each row
+                                                while ($row = $drugListResult->fetch_assoc()) {
+                                                    echo "<option value=\"" . $row["drug"] . "\">" . $row["drug"] . "</option>";
                                                 }
-                                                ?>
-                                            </select>
-                                        </div>
+                                            } else {
+                                                echo "<option value=\"\">No drugs available</option>";
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                <div class="mt-6">
+                                    <!-- <input type="submit" onclick="window.location.href='../addClinicals/'" value="Add Clinical Files" name="goToClinical" class="btn btn-primary btn-user btn-block"> -->
+                                    <button type="submit" onclick="window.location.href='../nurseDash/'" name="goToNurseDash" class="btn btn-primary btn-user btn-block mt-3">Submit</button>
+                                    <button type="button" onclick="printFormData()" class="btn btn-primary btn-user btn-block mt-3">Print</button>
+                                </div>
+                                
 
                                         <!-- Display selected drugs -->
                                         <div id="selectedDrugs" class="mt-2"></div>
@@ -185,38 +191,44 @@
 
         <!-- Drug Selection Script -->
         <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const drugSelect = document.getElementById('drugSelect');
-                const prescriptionTextarea = document.getElementById('prescription');
-                const selectedDrugsDiv = document.getElementById('selectedDrugs');
+        document.addEventListener('DOMContentLoaded', function () {
+            const drugSelect = document.getElementById('drugSelect');
+            const prescriptionTextarea = document.getElementById('prescription');
+            const selectedDrugsDiv = document.getElementById('selectedDrugs');
 
-                drugSelect.addEventListener('change', function () {
-                    const selectedDrug = drugSelect.value;
+            drugSelect.addEventListener('change', function () {
+                const selectedDrug = drugSelect.value;
 
-                    if (selectedDrug !== '') {
-                        const option = document.createElement('div');
-                        option.classList.add('inline-flex', 'items-center', 'bg-gray-200', 'rounded-full', 'px-3', 'py-1', 'mr-2', 'mb-2');
-                        option.innerHTML = `
-                            <span class="text-sm font-semibold mr-1">${selectedDrug}</span>
-                            <button type="button" class="text-xs font-semibold focus:outline-none" onclick="removeDrug(this)">X</button>
-                        `;
+                if (selectedDrug !== '') {
+                    const option = document.createElement('div');
+                    option.classList.add('inline-flex', 'items-center', 'bg-gray-200', 'rounded-full', 'px-3', 'py-1', 'mr-2', 'mb-2');
+                    option.innerHTML = `
+                        <span class="text-sm font-semibold mr-1">${selectedDrug}</span>
+                        <button type="button" class="text-xs font-semibold focus:outline-none" onclick="removeDrug(this)">X</button>
+                    `;
 
-                        selectedDrugsDiv.appendChild(option);
-                        prescriptionTextarea.value += selectedDrug + '\n';
-                        drugSelect.value = ''; // Reset dropdown value
-                    }
-                });
+                    selectedDrugsDiv.appendChild(option);
+                    prescriptionTextarea.value += selectedDrug + '\n';
+                    drugSelect.value = ''; // Reset dropdown value
+                }
             });
+        });
 
-            function removeDrug(element) {
-                const drugToRemove = element.previousElementSibling.innerText.trim();
-                element.parentElement.remove();
-                
-                // Remove drug from textarea
-                const prescriptionTextarea = document.getElementById('prescription');
-                prescriptionTextarea.value = prescriptionTextarea.value.replace(drugToRemove + '\n', '');
-            }
-        </script>
-    </body>
+        function removeDrug(element) {
+            const drugToRemove = element.previousElementSibling.innerText.trim();
+            element.parentElement.remove();
+            
+            // Remove drug from textarea
+            const prescriptionTextarea = document.getElementById('prescription');
+            prescriptionTextarea.value = prescriptionTextarea.value.replace(drugToRemove + '\n', '');
+        }
+    </script>
+
+
+
+
+
+
+</body>
 
 </html>

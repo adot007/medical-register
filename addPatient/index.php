@@ -1,6 +1,19 @@
 <?php   
     //   include '../includes/header.inc.php';
      session_start();
+    
+     $patient_id = null;
+// Retrieve patient ID from a session variable if it's already set
+if (isset($_SESSION['current_patient_id'])) {
+    $patient_id = $_SESSION['current_patient_id'];
+} 
+// else {
+//     // Display an error message
+//     echo "Patient ID not found.";
+//     // You can also redirect the user to another page using header function
+//     // header("Location: error_page.php");
+//     exit(); 
+// }
     $pageTitle = "Add Patient";
 ?>
 
@@ -199,20 +212,27 @@ include("../partials/head.php") ;
 
                     <!-- Submit Button -->
                     <div class="mt-6">
-                        <button type="submit" class="btn btn-primary btn-user btn-block">Submit</button>
+                        <button type="submit" name="submit_vitals" class="btn btn-primary btn-user btn-block">Submit and Add to Vitals</button>
                     </div>
+               
 
-                </form>
+    <!-- Second Submit Button -->
+    </form>
+    <div class="mt-3">
+    <form action="./add_to_appointments.php" method="post" id="addToAppointmentsForm">
+    <input type="hidden" name="patient_id" value="<?php echo $patient_id; ?>">
+    <!-- Other form inputs -->
+    <button type="submit" name="submit_appointments" class="btn btn-primary btn-user btn-block">Submit and Add to Appointments</button>
+</form>
+
+    </div>
             </div>
         </div>
     </div>
-
-
-
-    </div></div>
-    </div></div>
-    </div>
-
+</div>
+</div>
+</div>
+</div>
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
@@ -230,6 +250,35 @@ include("../partials/head.php") ;
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const addToAppointmentsForm = document.forms['addToAppointments'];
+
+        addToAppointmentsForm.addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Submit the form data
+            const formData = new FormData(addToAppointmentsForm);
+            fetch(addToAppointmentsForm.action, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Form submitted successfully
+                    // You can redirect or show a success message here
+                    console.log('Patient added to appointments successfully');
+                } else {
+                    // Handle errors or display error messages
+                    console.error('Error adding patient to appointments');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    });
+</script>
 
 
 </body>

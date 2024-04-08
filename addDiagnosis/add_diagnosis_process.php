@@ -11,6 +11,7 @@
   }
   $diagnosis = $_POST['diagnosis'];
   $prescription = $_POST['prescription'];
+  
   $notes = $_POST['notes'];
   //If the staff ID is not SET, submit as NULL to the DB; else use the staff ID'
   $staff_id = !isset($_SESSION['staff_id']) ? NULL : $_SESSION['staff_id'];
@@ -21,22 +22,32 @@
   # $[] = $_POST[''];
 
   $sql = "INSERT INTO medical_records (patient_id, staff_id, vitals_id, diagnosis, prescription, notes)
-          VALUES(?, ?, ?, ?, ?, ?);";
+        VALUES (?, ?, ?, ?, ?, ?)";
 
   $stmt = mysqli_prepare($conn, $sql);
 
+if ($stmt) {
   mysqli_stmt_bind_param($stmt, "ssssss", $current_patient_id, $staff_id, $vitals_id, $diagnosis, $prescription, $notes);
 
-  mysqli_execute($stmt);
-  
-  if(!isset($_POST)){
-    die("Error submitting details. Please try again.");
-  } else {
-    echo('<script>alert("Details submitted successfully")</script>');
+  if (mysqli_stmt_execute($stmt)) {
+    echo '<script>alert("Details submitted successfully")</script>';
 
-    if(isset($_POST['goToClinical'])){
-      header ('location: ../addClinicals');
-    } elseif (isset($_POST['goToNurseDash'])){
-      header ('location: /medical/');
+
+    if (isset($_POST['goToClinical'])) {
+            header('location: ../requestDocs');
+            exit(); // Ensure script stops execution after redirection
+        } elseif (isset($_POST['goToNurseDash'])) {
+            header('location: ../nurseDash/');
+            exit(); // Ensure script stops execution after redirection
+        }
+    } else {
+        echo "Error executing SQL statement: " . mysqli_error($conn);
     }
-  }
+
+    mysqli_stmt_close($stmt);
+} else {
+    echo "Error preparing SQL statement: " . mysqli_error($conn);
+}
+
+// Close connection after usage
+mysqli_close($conn);
