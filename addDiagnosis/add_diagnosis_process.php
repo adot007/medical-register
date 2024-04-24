@@ -30,10 +30,9 @@ if ($stmt) {
   mysqli_stmt_bind_param($stmt, "ssssss", $current_patient_id, $staff_id, $vitals_id, $diagnosis, $prescription, $notes);
 
   if (mysqli_stmt_execute($stmt)) {
-    echo "<script>alert('Patient diagnosis added successfully'); window.location='../nurseDash/';</script>";
+    echo '<script>alert("Details submitted successfully")</script>';  
 
-
-    if (isset($_POST['goToClinical'])) {
+    if (isset($_POST['goToDocReq'])) {
             header('location: ../requestDocs');
             exit(); // Ensure script stops execution after redirection
         } elseif (isset($_POST['goToNurseDash'])) {
