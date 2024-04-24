@@ -4,6 +4,7 @@
 
     // Set the page title
     $pageTitle = "Add Record";
+    
 ?>
 
 <!DOCTYPE html>

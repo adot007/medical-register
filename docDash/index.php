@@ -83,7 +83,8 @@ include("../partials/head.php") ;
 // Fetch data from the appointments table along with the patient's name
 $query = "SELECT a.queue_id, a.arrival_time, a.patient_id, p.first_name, p.surname, p.other_names 
           FROM appointments AS a
-          JOIN patient_data AS p ON a.patient_id = p.patient_id";
+          JOIN patient_data AS p ON a.patient_id = p.patient_id
+          WHERE DATE(a.arrival_time) = CURDATE()";
 $result = mysqli_query($conn, $query);
 
 // Check if there are any rows returned

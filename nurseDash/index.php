@@ -127,7 +127,7 @@
                                         echo "<td>" . $row['faculty'] . "</td>";
                                         echo "<td>" . $row['roll_num'] . "</td>";
                                         echo "<td><button class='btn btn-primary btn-sm' onclick=\"window.location.href='../getPatientMedicalRecord/index.php?id={$row['patient_id']}'\">View Records</button></td>";
-                                        echo "<td><button class='btn btn-success btn-sm' onclick=\"window.location.href='../addDiagnosis/'\">Add New Record</button></td>";
+                                        echo "<td><button class='btn btn-success btn-sm' onclick=\"window.location.href='../addVitals/'\">Add New Record</button></td>";
                                         echo "</tr>";
                                     }
 

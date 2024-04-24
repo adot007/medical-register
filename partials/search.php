@@ -1,5 +1,5 @@
 <?php
-    // Start the session if it's not already started
+    
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
     }
@@ -36,8 +36,7 @@
         </div>
     </div>
 </form>
-           
-        <?php   
+<?php   
     
             // Process search
             if(isset($_GET['search']) && $_GET['search'] != "") {
