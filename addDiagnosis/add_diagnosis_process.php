@@ -10,7 +10,7 @@
       $current_patient_id = $_SESSION['current_patient_id'];
   }
   $diagnosis = $_POST['diagnosis'];
-  $prescription = $_POST['prescription[]'];
+  $prescription = $_POST['prescription'];
   
   $notes = $_POST['notes'];
   //If the staff ID is not SET, submit as NULL to the DB; else use the staff ID'

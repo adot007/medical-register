@@ -27,10 +27,10 @@ include("../partials/sidebar.php") ;
         </button>
 
         <!-- Topbar Search -->
-        <?php  
+        <!-- <?php  
                 // Include the search bar
                 include("../partials/search.php");
-            ?>
+            ?> -->
         <!-- Topbar Navbar -->
         <?php  
 include("../partials/navbar.php") ;

@@ -36,8 +36,7 @@
         </div>
     </div>
 </form>
-           
-        <?php   
+<?php   
     
             // Process search
             if(isset($_GET['search']) && $_GET['search'] != "") {
