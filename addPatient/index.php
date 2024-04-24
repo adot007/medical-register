@@ -131,7 +131,7 @@ include("../partials/head.php") ;
         <div class="card border-primary shadow h-100 py-2">
             <div class="card-body">
                 <h2 class="text-2xl font-semibold mb-4">Input data here</h2>
-                <form name="addPatient" action="./add_patient_process.php" method="POST">
+                <form name="addPatient" action="add_patient_process.php" method="POST">
 
                     <!-- Input 1 -->
                     <div class="form-group row">
@@ -212,19 +212,11 @@ include("../partials/head.php") ;
 
                     <!-- Submit Button -->
                     <div class="mt-6">
-                        <button type="submit" name="submit_vitals" class="btn btn-primary btn-user btn-block">Submit and Add to Vitals</button>
+                        <button type="submit" name="submit_vitals" class="btn btn-primary btn-user btn-block">Add Vitals</button>
+                        <button type="submit" name="submit_appointments" class="btn btn-primary btn-user btn-block">Forward to Doctor's Queue</button>
                     </div>
-               
-
-    <!-- Second Submit Button -->
-    </form>
-    <div class="mt-3">
-    <form action="./add_to_appointments.php" method="post" id="addToAppointmentsForm">
-    <input type="hidden" name="patient_id" value="<?php echo $patient_id; ?>">
-    <!-- Other form inputs -->
-    <button type="submit" name="submit_appointments" class="btn btn-primary btn-user btn-block">Submit and Add to Appointments</button>
-</form>
-
+                 </form>
+  
     </div>
             </div>
         </div>
@@ -250,37 +242,7 @@ include("../partials/head.php") ;
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
-    <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const addToAppointmentsForm = document.forms['addToAppointments'];
-
-        addToAppointmentsForm.addEventListener('submit', function (event) {
-            event.preventDefault(); // Prevent the default form submission
-
-            // Submit the form data
-            const formData = new FormData(addToAppointmentsForm);
-            fetch(addToAppointmentsForm.action, {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => {
-                if (response.ok) {
-                    // Form submitted successfully
-                    // You can redirect or show a success message here
-                    console.log('Patient added to appointments successfully');
-                } else {
-                    // Handle errors or display error messages
-                    console.error('Error adding patient to appointments');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        });
-    });
-</script>
-
-
+   
 </body>
 
 

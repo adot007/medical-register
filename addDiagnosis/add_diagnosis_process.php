@@ -10,7 +10,7 @@
       $current_patient_id = $_SESSION['current_patient_id'];
   }
   $diagnosis = $_POST['diagnosis'];
-  $prescription = $_POST['prescription'];
+  $prescription = $_POST['prescription[]'];
   
   $notes = $_POST['notes'];
   //If the staff ID is not SET, submit as NULL to the DB; else use the staff ID'
@@ -30,10 +30,9 @@ if ($stmt) {
   mysqli_stmt_bind_param($stmt, "ssssss", $current_patient_id, $staff_id, $vitals_id, $diagnosis, $prescription, $notes);
 
   if (mysqli_stmt_execute($stmt)) {
-    echo '<script>alert("Details submitted successfully")</script>';
+    echo '<script>alert("Details submitted successfully")</script>';  
 
-
-    if (isset($_POST['goToClinical'])) {
+    if (isset($_POST['goToDocReq'])) {
             header('location: ../requestDocs');
             exit(); // Ensure script stops execution after redirection
         } elseif (isset($_POST['goToNurseDash'])) {

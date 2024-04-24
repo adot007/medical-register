@@ -105,7 +105,7 @@
                     <div class="col-lg-7 mx-auto mb-4">
                         <div class="card border-primary shadow h-100 py-2">
                             <div class="card-body">
-                                <h2 class="text-2xl font-semibold mb-4">Add New Record</h2>
+                                <h2 class="text-2xl font-semibold mb-4">Add Diagnosis</h2>
                                 <form action="./add_diagnosis_process.php" method="POST" enctype="multipart/form-data">
 
                                     <!-- Display the patient's name -->
@@ -141,10 +141,6 @@
                                             ?>
                                         </select>
                                     </div>
-                                <div class="mt-6">
-                                    <!-- <input type="submit" onclick="window.location.href='../addClinicals/'" value="Add Clinical Files" name="goToClinical" class="btn btn-primary btn-user btn-block"> -->
-                                    <button type="submit" onclick="window.location.href='../nurseDash/'" name="goToNurseDash" class="btn btn-primary btn-user btn-block mt-3">Submit</button>
-                                    <button type="button" onclick="printFormData()" class="btn btn-primary btn-user btn-block mt-3">Print</button>
                                 </div>
                                 
 
